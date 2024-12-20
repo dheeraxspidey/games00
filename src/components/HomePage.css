@@ -42,79 +42,129 @@
     font-family: 'Russo One', sans-serif;
 }
 
+.title-container {
+    position: relative;
+    background: rgba(0, 0, 0, 0.85);
+    padding: 2.5rem;
+    border-radius: 15px;
+    margin: 2rem auto;
+    box-shadow: 
+        0 0 30px rgba(96, 239, 255, 0.15),
+        inset 0 0 20px rgba(96, 239, 255, 0.05);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(96, 239, 255, 0.2);
+}
+
 .title-word {
-    font-family: 'Press Start 2P', cursive;
+    font-family: 'Press Start 2P', monospace;
     font-size: 2.5rem;
-    background: linear-gradient(45deg, 
-        #32CD32,  /* Brighter green */
-        #40E0D0,  /* Turquoise */
-        #FF69B4   /* Hot pink */
+    background: linear-gradient(
+        45deg,
+        #60efff,
+        #00ff87
     );
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    text-shadow: 
-        3px 3px 0 rgba(0, 0, 0, 0.4),  /* Stronger shadow */
-        -1px -1px 0 rgba(255, 255, 255, 0.2);  /* Light edge */
-    letter-spacing: 3px;
-    animation: arcadeGlow 3s ease-in-out infinite;
-    padding: 15px;
-    margin: 10px 0;
-    font-weight: bold;
-    position: relative;
     display: inline-block;
+    position: relative;
+    white-space: nowrap;
+    margin: 0;
+    padding: 0.5rem;
 }
 
-@keyframes arcadeGlow {
-    0%, 100% { 
-        filter: drop-shadow(0 0 8px rgba(24, 153, 24, 0.8));
+/* Typing effect wrapper */
+.typing-effect {
+    position: relative;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.typing-effect::after {
+    content: '|';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #60efff;
+    font-weight: bold;
+    animation: blink 0.7s infinite;
+    font-family: monospace;
+}
+
+/* Typing animation */
+.title-word {
+    width: 0;
+    overflow: hidden;
+    animation: 
+        typing 2.5s steps(40, end) forwards,
+        gradient 4s linear infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1 }
+    50% { opacity: 0 }
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
     }
-    50% { 
-        filter: drop-shadow(0 0 20px rgba(50, 205, 50, 0.9));
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
     }
 }
 
-/* Optional: Add retro scanline effect */
-.title-word::after {
+/* Container subtle glow */
+.title-container::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     background: linear-gradient(
-        transparent 0%,
-        rgba(0, 255, 0, 0.1) 50%,
-        transparent 100%
+        45deg,
+        transparent,
+        rgba(96, 239, 255, 0.1),
+        transparent
     );
-    animation: scanline 2s linear infinite;
+    animation: shine 2s linear infinite;
+    pointer-events: none;
 }
 
-@keyframes scanline {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(100%); }
+@keyframes shine {
+    from {
+        background-position: -200% 0;
+    }
+    to {
+        background-position: 200% 0;
+    }
 }
 
-.title-word:nth-child(1) {
-    animation-delay: 0s;
+/* Responsive design */
+@media (max-width: 768px) {
+    .title-container {
+        padding: 2rem;
+    }
+    .title-word {
+        font-size: 2rem;
+    }
 }
 
-.title-word:nth-child(2) {
-    animation-delay: 0.2s;
-    background-image: linear-gradient(45deg, 
-        #FF6B6B,
-        #FFD700,
-        #4FACFE
-    );
-}
-
-.title-word:nth-child(3) {
-    animation-delay: 0.4s;
-    background-image: linear-gradient(45deg, 
-        #4FACFE,
-        #FFD700,
-        #FF6B6B
-    );
+@media (max-width: 480px) {
+    .title-container {
+        padding: 1.5rem;
+    }
+    .title-word {
+        font-size: 1.5rem;
+    }
 }
 
 .games-grid {

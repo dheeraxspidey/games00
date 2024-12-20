@@ -71,12 +71,14 @@ const Movieguess = ({ onBackToHome, isDarkMode, toggleTheme }) => {
             const randomMovie = movies[Math.floor(Math.random() * movies.length)];
             setMovieToGuess(randomMovie.title);
             setCurrentMovieData(randomMovie);
-            setCurrentState(
-                randomMovie.title.split('').map((letter) => ({
-                    char: letter,
-                    flipped: letter === ' ' ? true : false,
-                }))
-            );
+            
+            // Ensure consistent initial state for each character
+            const initialState = randomMovie.title.split('').map(char => ({
+                char: char,
+                flipped: char === ' ' || char === '-',
+            }));
+            setCurrentState(initialState);
+            
             setChances(6);
             setGuessedLetters(new Set());
             setKeyboardState({});
@@ -94,10 +96,12 @@ const Movieguess = ({ onBackToHome, isDarkMode, toggleTheme }) => {
         const newGuessedLetters = new Set(guessedLetters).add(letter);
         setGuessedLetters(newGuessedLetters);
 
-        const lowerLetter = letter.toLowerCase();
-        const lowerMovieTitle = movieToGuess.toLowerCase();
+        // Convert to uppercase for consistent comparison
+        const upperLetter = letter.toUpperCase();
+        const movieTitle = movieToGuess.toUpperCase();
 
-        if (!lowerMovieTitle.includes(lowerLetter)) {
+        if (!movieTitle.includes(upperLetter)) {
+            // Incorrect guess
             const newChances = chances - 1;
             setChances(newChances);
             setKeyboardState({ ...keyboardState, [letter]: 'incorrect' });
@@ -111,19 +115,25 @@ const Movieguess = ({ onBackToHome, isDarkMode, toggleTheme }) => {
                 setIsAnimating(false);
             }, 500);
         } else {
+            // Correct guess
             setKeyboardState({ ...keyboardState, [letter]: 'correct' });
             
+            // Update all instances of the letter
             const newState = currentState.map((charObj, index) => ({
                 char: charObj.char,
-                flipped: charObj.char.toLowerCase() === lowerLetter || 
+                flipped: charObj.char.toUpperCase() === upperLetter || 
                         charObj.flipped || 
-                        charObj.char === ' '
+                        charObj.char === ' ' || 
+                        charObj.char === '-'
             }));
             setCurrentState(newState);
             
             setTimeout(() => {
+                // Check win condition
                 const isWon = newState.every(charObj => 
-                    charObj.flipped || charObj.char === ' ' || charObj.char === '-'
+                    charObj.flipped || 
+                    charObj.char === ' ' || 
+                    charObj.char === '-'
                 );
                 if (isWon) {
                     setGameOver(true);
@@ -188,9 +198,11 @@ const Movieguess = ({ onBackToHome, isDarkMode, toggleTheme }) => {
                 gameOver={gameOver}
             />
             
-            <div className="App">
-                <h1 className="game-title">CineGuess-Telugu</h1>
-                
+            <div className="App"><div className="title-container">
+            <div className="typing-effect">
+                <h1 className="game-title title-word " fontsize="20px" color='black'>CineGuess</h1>
+                </div>
+                </div>
                 <div className="game-status">
                     <div 
                         className="chances-counter" 
@@ -231,19 +243,22 @@ const Movieguess = ({ onBackToHome, isDarkMode, toggleTheme }) => {
                         {movieToGuess && currentState.length > 0 && movieToGuess.split(' ').map((word, wordIndex) => (
                             <div key={wordIndex} className={`word-row ${getCardSize(word.length)}`}>
                                 {word.split('').map((char, charIndex) => {
+                                    // Calculate correct global index
                                     const globalIndex = movieToGuess
-                                        .split(' ')
+                                        .split('')
+                                        .slice(0, movieToGuess.split(' ')
                                         .slice(0, wordIndex)
-                                        .join(' ').length + (wordIndex > 0 ? wordIndex : 0) + charIndex;
+                                        .join(' ').length + wordIndex + charIndex)
+                                        .length;
                                     
                                     return (
-                                        <div key={charIndex} className="flip-card">
+                                        <div key={`${wordIndex}-${charIndex}`} className="flip-card">
                                             <div className={`flip-card-inner ${
                                                 currentState[globalIndex]?.flipped ? 'flipped' : ''
                                             }`}>
                                                 <div className="flip-card-front"></div>
                                                 <div className="flip-card-back">
-                                                    {char === ' ' ? '\u00A0' : char}
+                                                    {currentState[globalIndex]?.char || char}
                                                 </div>
                                             </div>
                                         </div>

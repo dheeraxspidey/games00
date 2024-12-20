@@ -31,9 +31,11 @@ const HomePage = ({ onStartGame }) => {
         <div className="home-page">
             <MatrixBackground />
             <div className="home-content">
-                <h1 className="home-title">
-                    <span className="title-word">Gamez-0007</span>
-                </h1>
+                <div className="title-container">
+                    <div className="typing-effect">
+                        <h1 className="title-word">Gamez-0007</h1>
+                    </div>
+                </div>
 
                 <div className="games-grid">
                     {games.map(game => (

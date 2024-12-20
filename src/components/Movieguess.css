@@ -70,10 +70,10 @@ html, body {
 /* Base flip card container */
 .flip-card {
     perspective: 2500px;
-    width: calc(min(5vw, 45px));
-    height: calc(min(7vw, 60px));
+    width: calc(min(6.5vw, 50px));
+    height: calc(min(8.5vw, 65px));
     position: relative;
-    margin: 2px;
+    margin: 3px;
 }
 
 /* Inner container that will be flipped */
@@ -125,7 +125,7 @@ html, body {
         inset 0 0 15px rgba(79, 172, 254, 0.2);
     color: #fff;
     transform: rotateY(180deg);
-    font-size: calc(min(3vw, 24px));
+    font-size: calc(min(4vw, 20px));
     font-weight: 700;
     backdrop-filter: blur(5px);
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
@@ -684,12 +684,12 @@ html, body {
     }
     
     .flip-card {
-        width: calc(min(8vw, 40px));
-        height: calc(min(10vw, 55px));
+        width: calc(min(9vw, 40px));
+        height: calc(min(11vw, 55px));
     }
     
     .flip-card-back {
-        font-size: calc(min(3.5vw, 20px));
+        font-size: calc(min(4.5vw, 18px));
     }
 }
 
@@ -707,17 +707,17 @@ html, body {
 /* Update the flip card responsive styles */
 @media (max-width: 768px) {
     .flip-card {
-        width: calc(min(6.5vw, 45px));
-        height: calc(min(8.5vw, 60px));
+        width: calc(min(8vw, 45px));
+        height: calc(min(10vw, 60px));
     }
 
     .word-row {
-        gap: 0.5vw;
-        margin: 0.5vh 0;
+        gap: 4px;
+        margin: 4px 0;
     }
 
     .flip-card-back {
-        font-size: calc(min(3.2vw, 20px));
+        font-size: calc(min(4vw, 20px));
     }
 
     .words-container {
@@ -727,8 +727,8 @@ html, body {
 
 @media (max-width: 480px) {
     .flip-card {
-        width: calc(min(7vw, 40px));
-        height: calc(min(9vw, 55px));
+        width: calc(min(9vw, 40px));
+        height: calc(min(11vw, 55px));
     }
 
     .word-row {
@@ -737,7 +737,7 @@ html, body {
     }
 
     .flip-card-back {
-        font-size: calc(min(3.5vw, 18px));
+        font-size: calc(min(4.5vw, 18px));
     }
 
     .words-container {
@@ -752,8 +752,8 @@ html, body {
 
 @media (max-width: 360px) {
     .flip-card {
-        width: calc(min(4vw, 30px));
-        height: calc(min(6vw, 40px));
+        width: calc(min(10vw, 35px));
+        height: calc(min(12vw, 50px));
     }
 
     .word-row {
@@ -762,7 +762,7 @@ html, body {
     }
 
     .flip-card-back {
-        font-size: calc(min(2vw, 14px));
+        font-size: calc(min(5vw, 16px));
     }
 
     .words-container {
