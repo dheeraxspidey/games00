@@ -1,0 +1,825 @@
+/* =========================================
+   Base Styles & Layout
+   ========================================= */
+html, body {
+    font-family: 'Dongle', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100vw;
+    overflow: auto;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    transition: background-color 0.3s;
+    padding-top: 60px;
+}
+
+.App {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    background: transparent;
+    color: #333;
+}
+
+
+
+/* Responsive Design */
+
+/* =========================================
+   Game Board Container
+   ========================================= */
+.movie-name-container {
+    width: 95%;
+    max-width: 1200px;
+    padding: 3vh 3vw;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(41, 50, 80, 0.8), rgba(26, 31, 60, 0.9));
+    margin: 2vh 0;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.2),
+        inset 0 0 20px rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.movie-name-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, 
+        rgba(0, 255, 255, 0.1) 0%,
+        transparent 50%,
+        rgba(0, 255, 255, 0.1) 100%);
+    animation: neonPulse 3s infinite;
+    z-index: 0;
+}
+
+.words-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5vh;
+    padding: 1vh 0;
+    position: relative;
+    z-index: 2;
+}
+
+.word-row {
+    display: flex;
+    justify-content: center;
+    gap: 1vw;
+    margin: 0.8vh 0;
+    filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.3));
+}
+
+/* =========================================
+   Flip Card Styles & Animations
+   ========================================= */
+
+/* Base flip card container */
+.flip-card {
+    perspective: 2500px;
+    width: calc(min(6vw, 50px));
+    height: calc(min(8vw, 65px));
+    position: relative;
+}
+
+/* Inner container that will be flipped */
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* The flipped state */
+.flip-card-inner.flipped {
+    transform: rotateY(180deg);
+}
+
+/* Front and back faces */
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+}
+
+/* Front face styling */
+.flip-card-front {
+    background: linear-gradient(135deg, #2d3250, #1a1f3c);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.1),
+        inset 0 0 15px rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+/* Back face styling */
+.flip-card-back {
+    background: linear-gradient(135deg, #4facfe30, #00f2fe20);
+    border: 1px solid rgba(79, 172, 254, 0.3);
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.1),
+        inset 0 0 15px rgba(79, 172, 254, 0.1);
+    color: #fff;
+    transform: rotateY(180deg);
+    font-size: calc(min(3vw, 24px));
+    font-weight: 600;
+    backdrop-filter: blur(5px);
+}
+
+/* Dark mode styles */
+.dark-mode .flip-card-front {
+    background: linear-gradient(135deg, #1a1a2e, #0f111f);
+}
+
+.dark-mode .flip-card-back {
+    background: linear-gradient(135deg, #a18cd120, #fbc2eb20);
+    border-color: rgba(161, 140, 209, 0.3);
+}
+
+/* =========================================
+   Game Status & Counter Styles
+   ========================================= */
+.game-status {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Enhanced Streak Counter */
+.streak-container {
+    background: linear-gradient(135deg, #6441a5, #2a0845);
+    padding: 1vh 2vw;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.streak {
+    font-size: calc(min(4vw, 24px));
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 0;
+    padding: 10px 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Streak Animations & Effects */
+.streak::before {
+    content: '🔥';
+    font-size: 1.2em;
+    animation: flicker 1.5s infinite;
+}
+
+@keyframes flicker {
+    0%, 100% { transform: rotate(-5deg) scale(1); }
+    25% { transform: rotate(5deg) scale(1.1); }
+    50% { transform: rotate(-5deg) scale(1); }
+    75% { transform: rotate(5deg) scale(1.2); }
+}
+
+/* Streak Level Effects */
+.streak-container[data-streak="0"] { background: linear-gradient(135deg, #6441a5, #2a0845); }
+.streak-container[data-streak="5"] {
+    background: linear-gradient(135deg, #833ab4, #fd1d1d);
+    animation: glow 2s infinite;
+}
+.streak-container[data-streak="10"] {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    animation: glow 1.5s infinite;
+}
+.streak-container[data-streak="15"] {
+    background: linear-gradient(135deg, #00f2fe, #4facfe);
+    animation: rainbow 3s infinite;
+}
+
+/* Enhanced Chances Counter */
+.chances-counter {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    padding: 1vh 2vw;
+    border-radius: 15px;
+    color: white;
+    font-size: calc(min(3.5vw, 20px));
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Chances States */
+.chances-counter[data-chances="6"] { background: linear-gradient(135deg, #4CAF50, #45a049); }
+.chances-counter[data-chances="5"] { background: linear-gradient(135deg, #8BC34A, #7CB342); }
+.chances-counter[data-chances="4"] { background: linear-gradient(135deg, #FFC107, #FFB300); }
+.chances-counter[data-chances="3"] { background: linear-gradient(135deg, #FF9800, #FB8C00); }
+.chances-counter[data-chances="2"] { background: linear-gradient(135deg, #FF5722, #F4511E); }
+.chances-counter[data-chances="1"] { 
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    animation: pulse-warning 1s infinite;
+}
+
+/* Counter Animations */
+@keyframes pulse-warning {
+    0% { transform: scale(1); box-shadow: 0 4px 15px rgba(244, 67, 54, 0.2); }
+    50% { transform: scale(1.05); box-shadow: 0 4px 20px rgba(244, 67, 54, 0.4); }
+    100% { transform: scale(1); box-shadow: 0 4px 15px rgba(244, 67, 54, 0.2); }
+}
+
+.chances-counter::before {
+    content: '❤️';
+    font-size: 1.2em;
+    animation: beat 1.5s ease-in-out infinite;
+}
+
+@keyframes beat {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.25); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+    60% { transform: scale(1); }
+}
+
+/* Shine Effects */
+.streak-container::after,
+.chances-counter::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transform: rotate(45deg);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+}
+
+/* =========================================
+   Keyboard & Game Controls
+   ========================================= */
+.keyboard {
+    width: 90%;
+    max-width: 800px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.key {
+    width: calc(min(8vw, 45px));
+    height: calc(min(8vw, 45px));
+    border: none;
+    border-radius: 8px;
+    font-size: calc(min(3vw, 18px));
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Key States */
+.key:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.key:not(:disabled):active {
+    transform: translateY(1px);
+}
+
+.correct-key {
+    background: linear-gradient(145deg, #28a745, #20c997) !important;
+    color: white;
+    transform: scale(0.95);
+    animation: pop 0.3s ease-in-out;
+}
+
+.incorrect-key {
+    background: linear-gradient(145deg, #dc3545, #c82333) !important;
+    color: white;
+    transform: scale(0.95);
+    animation: shake 0.3s ease-in-out;
+}
+
+/* Game Buttons */
+.game-button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    font-size: calc(min(3.5vw, 18px));
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.start-game-button {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+    color: white;
+}
+
+/* Gamified Hint Button */
+.hint-button {
+    position: relative;
+    padding: 12px 25px;
+    background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+    border: none;
+    border-radius: 15px;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 
+        0 5px 15px rgba(255, 107, 107, 0.3),
+        inset 0 -4px 0 rgba(0, 0, 0, 0.2);
+    transform: translateY(0);
+}
+
+/* Treasure chest icon */
+.hint-button::before {
+    content: '🎁';
+    margin-right: 8px;
+    font-size: 1.2em;
+    transition: transform 0.3s ease;
+}
+
+/* Shine effect */
+.hint-button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transform: rotate(45deg);
+    transition: 0.5s;
+}
+
+/* Hover state */
+.hint-button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 
+        0 8px 20px rgba(255, 107, 107, 0.4),
+        inset 0 -4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.hint-button:hover::before {
+    transform: rotate(-10deg);
+}
+
+.hint-button:hover::after {
+    left: 150%;
+}
+
+/* Active state */
+.hint-button:active:not(:disabled) {
+    transform: translateY(2px);
+    box-shadow: 
+        0 2px 10px rgba(255, 107, 107, 0.3),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Used state */
+.hint-button.used {
+    background: linear-gradient(135deg, #808080, #A9A9A9);
+    cursor: not-allowed;
+    transform: none;
+    opacity: 0.7;
+}
+
+.hint-button.used::before {
+    content: '📦';
+    opacity: 0.7;
+}
+
+/* Hint button animation */
+@keyframes hintPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 
+            0 5px 15px rgba(255, 107, 107, 0.3),
+            inset 0 -4px 0 rgba(0, 0, 0, 0.2);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 
+            0 8px 20px rgba(255, 107, 107, 0.4),
+            inset 0 -4px 0 rgba(0, 0, 0, 0.2);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 
+            0 5px 15px rgba(255, 107, 107, 0.3),
+            inset 0 -4px 0 rgba(0, 0, 0, 0.2);
+    }
+}
+
+.hint-button:not(.used) {
+    animation: hintPulse 2s infinite;
+}
+
+/* Dark mode styles */
+.dark-mode .hint-button {
+    background: linear-gradient(135deg, #FF6B6B, #FF4B2B);
+    box-shadow: 
+        0 5px 15px rgba(255, 107, 107, 0.2),
+        inset 0 -4px 0 rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .hint-button.used {
+    background: linear-gradient(135deg, #4A4A4A, #686868);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .hint-button {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hint-button {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+    }
+    
+    .hint-button::before {
+        font-size: 1em;
+    }
+}
+
+.game-button:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.game-button:not(:disabled):active {
+    transform: translateY(1px);
+}
+
+.game-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Game Messages */
+.game-message {
+    padding: 15px 25px;
+    border-radius: 10px;
+    margin: 15px 0;
+    font-size: calc(min(4vw, 20px));
+    font-weight: bold;
+    text-align: center;
+    animation: fadeInUp 0.5s ease-out;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.success-message {
+    background: linear-gradient(135deg, #28a745, #20c997) !important;
+    color: white;
+    animation: fadeInUp 0.5s ease-out, bounce 1s ease 0.5s;
+}
+
+.error-message {
+    background: linear-gradient(135deg, #dc3545, #c82333) !important;
+    color: white;
+    animation: fadeInUp 0.5s ease-out, shake 0.5s ease-in-out 0.5s;
+}
+
+/* =========================================
+   Dark Mode Styles
+   ========================================= */
+.dark-mode {
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+.dark-mode .App {
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.dark-mode .header {
+    background-color: #1a1a1a !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+.dark-mode .header button {
+    color: #ffffff;
+}
+
+.dark-mode .header button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .key {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .key:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.dark-mode .game-message {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* =========================================
+   Animations
+   ========================================= */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-20px); }
+    60% { transform: translateY(-10px); }
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes glow {
+    0%, 100% { box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2); }
+    50% { box-shadow: 0 4px 30px rgba(255, 215, 0, 0.6); }
+}
+
+@keyframes rainbow {
+    0% { background: linear-gradient(135deg, #ff2400, #e81d1d); }
+    20% { background: linear-gradient(135deg, #e8b71d, #e3a21a); }
+    40% { background: linear-gradient(135deg, #1de840, #1ddde8); }
+    60% { background: linear-gradient(135deg, #2b1de8, #dd00f3); }
+    80% { background: linear-gradient(135deg, #dd00f3, #dd00f3); }
+    100% { background: linear-gradient(135deg, #ff2400, #e81d1d); }
+}
+
+/* =========================================
+   Media Queries
+   ========================================= */
+@media (max-width: 768px) {
+    .keyboard {
+        gap: 6px;
+        padding: 0.8rem;
+    }
+    
+    .key {
+        width: calc(min(9vw, 40px));
+        height: calc(min(9vw, 40px));
+        font-size: calc(min(3.5vw, 16px));
+    }
+    
+    .game-status {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .app-container {
+        padding-top: 50px;
+    }
+    
+    .header {
+        height: 50px;
+    }
+    
+    .game-logo {
+        font-size: 2rem;
+        margin: 10px 0 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .keyboard {
+        gap: 4px;
+        padding: 0.5rem;
+    }
+    
+    .key {
+        width: calc(min(10vw, 35px));
+        height: calc(min(10vw, 35px));
+        font-size: calc(min(4vw, 14px));
+    }
+    
+    .movie-name-container {
+        padding: 1vh 1vw;
+    }
+    
+    .flip-card {
+        width: calc(min(8vw, 40px));
+        height: calc(min(10vw, 55px));
+    }
+    
+    .flip-card-back {
+        font-size: calc(min(3.5vw, 20px));
+    }
+}
+
+/* Dark Mode - Simple Background Change */
+.dark-mode .flip-card-front,
+.dark-mode .flip-card-back {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+.dark-mode .flip-card-back span {
+    color: #ffffff;
+}
+
+/* Update the flip card responsive styles */
+@media (max-width: 768px) {
+    .flip-card {
+        width: calc(min(5vw, 40px));
+        height: calc(min(7vw, 55px));
+    }
+
+    .word-row {
+        gap: 0.5vw;
+        margin: 0.5vh 0;
+    }
+
+    .flip-card-back {
+        font-size: calc(min(2.5vw, 20px));
+    }
+
+    .words-container {
+        gap: 1vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .flip-card {
+        width: calc(min(4.5vw, 35px));
+        height: calc(min(6.5vw, 45px));
+    }
+
+    .word-row {
+        gap: 0.3vw;
+        margin: 0.3vh 0;
+    }
+
+    .flip-card-back {
+        font-size: calc(min(2.2vw, 16px));
+    }
+
+    .words-container {
+        gap: 0.8vh;
+        padding: 0.5vh 0;
+    }
+
+    .movie-name-container {
+        padding: 2vh 1.5vw;
+    }
+}
+
+@media (max-width: 360px) {
+    .flip-card {
+        width: calc(min(4vw, 30px));
+        height: calc(min(6vw, 40px));
+    }
+
+    .word-row {
+        gap: 0.2vw;
+        margin: 0.2vh 0;
+    }
+
+    .flip-card-back {
+        font-size: calc(min(2vw, 14px));
+    }
+
+    .words-container {
+        gap: 0.5vh;
+    }
+}
+
+/* Animation for card reveal */
+@keyframes cardReveal {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.flip-card {
+    animation: cardReveal 0.3s ease-out forwards;
+}
+
+/* Hover effects */
+.flip-card-front::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 255, 255, 0.05),
+        transparent
+    );
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.flip-card:hover .flip-card-front::before {
+    opacity: 1;
+}
