@@ -1,11 +1,12 @@
 import React from 'react';
+import MatrixBackground from './MatrixBackground';
 import './HomePage.css';
 
 const HomePage = ({ onStartGame }) => {
     const games = [
         {
             id: 1,
-            title: "Telugu Movie Guess",
+            title: "CineGuess-Telugu",
             description: "Guess Telugu movie titles letter by letter",
             icon: "🎬",
             isActive: true
@@ -28,11 +29,10 @@ const HomePage = ({ onStartGame }) => {
 
     return (
         <div className="home-page">
+            <MatrixBackground />
             <div className="home-content">
                 <h1 className="home-title">
-                    <span className="title-word">Tollywood</span>
-                    <span className="title-word">Quest</span>
-                    <span className="title-word">Arena</span>
+                    <span className="title-word">Gamez-0007</span>
                 </h1>
 
                 <div className="games-grid">

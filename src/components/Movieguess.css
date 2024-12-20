@@ -43,33 +43,8 @@ html, body {
 .movie-name-container {
     width: 95%;
     max-width: 1200px;
-    padding: 3vh 3vw;
-    border-radius: 20px;
-    background: linear-gradient(135deg, rgba(41, 50, 80, 0.8), rgba(26, 31, 60, 0.9));
-    margin: 2vh 0;
-    display: flex;
-    justify-content: center;
-    position: relative;
-    box-shadow: 
-        0 10px 30px rgba(0, 0, 0, 0.2),
-        inset 0 0 20px rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.movie-name-container::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, 
-        rgba(0, 255, 255, 0.1) 0%,
-        transparent 50%,
-        rgba(0, 255, 255, 0.1) 100%);
-    animation: neonPulse 3s infinite;
-    z-index: 0;
+    padding: 2vh 2vw;
+    margin: 2vh auto;
 }
 
 .words-container {
@@ -77,18 +52,15 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5vh;
+    gap: 1vh;
     padding: 1vh 0;
-    position: relative;
-    z-index: 2;
 }
 
 .word-row {
     display: flex;
     justify-content: center;
-    gap: 1vw;
-    margin: 0.8vh 0;
-    filter: drop-shadow(0 0 5px rgba(0, 255, 255, 0.3));
+    gap: 0.5vw;
+    margin: 0.5vh 0;
 }
 
 /* =========================================
@@ -98,9 +70,10 @@ html, body {
 /* Base flip card container */
 .flip-card {
     perspective: 2500px;
-    width: calc(min(6vw, 50px));
-    height: calc(min(8vw, 65px));
+    width: calc(min(5vw, 45px));
+    height: calc(min(7vw, 60px));
     position: relative;
+    margin: 2px;
 }
 
 /* Inner container that will be flipped */
@@ -134,27 +107,28 @@ html, body {
 /* Front face styling */
 .flip-card-front {
     background: linear-gradient(135deg, #2d3250, #1a1f3c);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     box-shadow: 
-        0 4px 15px rgba(0, 0, 0, 0.1),
-        inset 0 0 15px rgba(255, 255, 255, 0.05);
-    color: rgba(255, 255, 255, 0.8);
+        0 4px 15px rgba(0, 0, 0, 0.15),
+        inset 0 0 15px rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
     font-size: 1.5em;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 /* Back face styling */
 .flip-card-back {
-    background: linear-gradient(135deg, #4facfe30, #00f2fe20);
-    border: 1px solid rgba(79, 172, 254, 0.3);
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+    border: 2px solid rgba(79, 172, 254, 0.4);
     box-shadow: 
-        0 4px 15px rgba(0, 0, 0, 0.1),
-        inset 0 0 15px rgba(79, 172, 254, 0.1);
+        0 4px 15px rgba(0, 0, 0, 0.15),
+        inset 0 0 15px rgba(79, 172, 254, 0.2);
     color: #fff;
     transform: rotateY(180deg);
     font-size: calc(min(3vw, 24px));
-    font-weight: 600;
+    font-weight: 700;
     backdrop-filter: blur(5px);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* Dark mode styles */
@@ -165,6 +139,17 @@ html, body {
 .dark-mode .flip-card-back {
     background: linear-gradient(135deg, #a18cd120, #fbc2eb20);
     border-color: rgba(161, 140, 209, 0.3);
+}
+
+/* Light mode specific styles */
+.light-mode .flip-card-front {
+    background: linear-gradient(135deg, #3a4466, #2d3250);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.light-mode .flip-card-back {
+    background: linear-gradient(135deg, #5fb8ff, #4facfe);
+    border: 2px solid rgba(95, 184, 255, 0.5);
 }
 
 /* =========================================
@@ -722,8 +707,8 @@ html, body {
 /* Update the flip card responsive styles */
 @media (max-width: 768px) {
     .flip-card {
-        width: calc(min(5vw, 40px));
-        height: calc(min(7vw, 55px));
+        width: calc(min(6.5vw, 45px));
+        height: calc(min(8.5vw, 60px));
     }
 
     .word-row {
@@ -732,7 +717,7 @@ html, body {
     }
 
     .flip-card-back {
-        font-size: calc(min(2.5vw, 20px));
+        font-size: calc(min(3.2vw, 20px));
     }
 
     .words-container {
@@ -742,17 +727,17 @@ html, body {
 
 @media (max-width: 480px) {
     .flip-card {
-        width: calc(min(4.5vw, 35px));
-        height: calc(min(6.5vw, 45px));
+        width: calc(min(7vw, 40px));
+        height: calc(min(9vw, 55px));
     }
 
     .word-row {
-        gap: 0.3vw;
-        margin: 0.3vh 0;
+        gap: 4px;
+        margin: 4px 0;
     }
 
     .flip-card-back {
-        font-size: calc(min(2.2vw, 16px));
+        font-size: calc(min(3.5vw, 18px));
     }
 
     .words-container {
@@ -822,4 +807,18 @@ html, body {
 
 .flip-card:hover .flip-card-front::before {
     opacity: 1;
+}
+
+
+
+/* Add this to handle orientation change */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    .movie-name-container {
+        padding: 1vh 1vw;
+    }
+
+    .flip-card {
+        width: calc(min(4vw, 35px));
+        height: calc(min(6vw, 45px));
+    }
 }

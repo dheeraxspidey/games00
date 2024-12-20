@@ -59,16 +59,7 @@ const Movieguess = ({ onBackToHome, isDarkMode, toggleTheme }) => {
         });
     }, []);
 
-    const updateGameState = (letter) => {
-        const newState = currentState.map((char, index) => {
-            if (movieToGuess[index].toUpperCase() === letter) {
-                return { ...char, flipped: true };
-            }
-            return char;
-        });
-        setCurrentState(newState);
-        return newState;
-    };
+   
 
     const startGame = () => {
         if (movies.length === 0) {
@@ -103,7 +94,10 @@ const Movieguess = ({ onBackToHome, isDarkMode, toggleTheme }) => {
         const newGuessedLetters = new Set(guessedLetters).add(letter);
         setGuessedLetters(newGuessedLetters);
 
-        if (!movieToGuess.includes(letter)) {
+        const lowerLetter = letter.toLowerCase();
+        const lowerMovieTitle = movieToGuess.toLowerCase();
+
+        if (!lowerMovieTitle.includes(lowerLetter)) {
             const newChances = chances - 1;
             setChances(newChances);
             setKeyboardState({ ...keyboardState, [letter]: 'incorrect' });
@@ -115,19 +109,29 @@ const Movieguess = ({ onBackToHome, isDarkMode, toggleTheme }) => {
                     setStreak(0);
                 }
                 setIsAnimating(false);
-            }, 300);
+            }, 500);
         } else {
             setKeyboardState({ ...keyboardState, [letter]: 'correct' });
-            const newState = updateGameState(letter);
+            
+            const newState = currentState.map((charObj, index) => ({
+                char: charObj.char,
+                flipped: charObj.char.toLowerCase() === lowerLetter || 
+                        charObj.flipped || 
+                        charObj.char === ' '
+            }));
+            setCurrentState(newState);
             
             setTimeout(() => {
-                if (newState.every(char => char.flipped)) {
+                const isWon = newState.every(charObj => 
+                    charObj.flipped || charObj.char === ' ' || charObj.char === '-'
+                );
+                if (isWon) {
                     setGameOver(true);
                     setMessage('Congratulations! You won!');
                     setStreak(streak + 1);
                 }
                 setIsAnimating(false);
-            }, 300);
+            }, 500);
         }
     };
 
@@ -165,6 +169,13 @@ const Movieguess = ({ onBackToHome, isDarkMode, toggleTheme }) => {
         setShowRules(false);
     };
 
+    const getCardSize = (wordLength) => {
+        if (wordLength >= 12) return 'extra-small-card';
+        if (wordLength >= 10) return 'small-card';
+        if (wordLength >= 8) return 'medium-card';
+        return '';
+    };
+
     return (
         <div className={`app-container ${isDarkMode ? "dark-mode" : "light-mode"} 
             ${gameStartAnimation ? 'game-start-animation' : ''}`}>
@@ -178,7 +189,7 @@ const Movieguess = ({ onBackToHome, isDarkMode, toggleTheme }) => {
             />
             
             <div className="App">
-                <h1 className="game-title">Movie Guessing Game</h1>
+                <h1 className="game-title">CineGuess-Telugu</h1>
                 
                 <div className="game-status">
                     <div 
@@ -218,12 +229,12 @@ const Movieguess = ({ onBackToHome, isDarkMode, toggleTheme }) => {
                 <div className={`movie-name-container ${isAnimating ? 'pulse' : ''}`}>
                     <div className="words-container">
                         {movieToGuess && currentState.length > 0 && movieToGuess.split(' ').map((word, wordIndex) => (
-                            <div key={wordIndex} className="word-row">
+                            <div key={wordIndex} className={`word-row ${getCardSize(word.length)}`}>
                                 {word.split('').map((char, charIndex) => {
                                     const globalIndex = movieToGuess
                                         .split(' ')
                                         .slice(0, wordIndex)
-                                        .join(' ').length + wordIndex + charIndex;
+                                        .join(' ').length + (wordIndex > 0 ? wordIndex : 0) + charIndex;
                                     
                                     return (
                                         <div key={charIndex} className="flip-card">
