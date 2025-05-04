@@ -1,8 +1,9 @@
 # 🎮 Movie Guess Game
 
 A fun and interactive web-based game where players guess movie titles based on hints. Built with React and deployed via Netlify.
-![image](https://github.com/user-attachments/assets/d3f3e67a-a0d3-4052-8a71-1d110f74957e)
-![image](https://github.com/user-attachments/assets/61e83558-662a-4ef4-a058-44c083559071)
+![image](https://github.com/user-attachments/assets/3e024539-f79b-4617-86a8-20f13b6fce41)
+
+![image](https://github.com/user-attachments/assets/7b1c8c09-cbeb-45a0-9961-4663fb32cb5d)
 
 
 Live demo++>>https://games007.netlify.app/
